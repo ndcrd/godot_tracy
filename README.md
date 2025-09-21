@@ -8,6 +8,11 @@
 
 ![](godot_tracy_sample.gif)
 
+# Useful links
+* [Tracy documentation](https://github.com/wolfpld/tracy/releases/latest/download/tracy.pdf)
+* [Godot C++ Profilers](https://docs.godotengine.org/en/stable/engine_details/development/debugging/using_cpp_profilers.html)
+* [Godot Custom modules](https://docs.godotengine.org/en/stable/engine_details/architecture/custom_modules_in_cpp.html)
+
 # How to use it
 
 Tracy is composed by two parts:
@@ -17,10 +22,7 @@ Tracy is composed by two parts:
 > Get Tracy documentation and Windows profiler GUI binary can be download from [releases page](https://github.com/wolfpld/tracy/releases/).
 
 ### Setup
-
-The first step is to include this module into your godot application module directory, or using the [custom modules](https://docs.godotengine.org/en/stable/development/cpp/custom_modules_in_cpp.html).
-
-You can use the following command:
+Clone repository and init submodule recursively:
 ```
 git clone --recurse-submodules git@github.com:ndcrd/godot_tracy.git
 ```
