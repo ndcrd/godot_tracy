@@ -1,8 +1,3 @@
-# Useful links
-* [Tracy documentation](https://github.com/wolfpld/tracy/releases/latest/download/tracy.pdf)
-* [Godot C++ Profilers](https://docs.godotengine.org/en/stable/engine_details/development/debugging/using_cpp_profilers.html)
-* [Godot Custom modules](https://docs.godotengine.org/en/stable/engine_details/architecture/custom_modules_in_cpp.html)test
-
 # How to use it
 
 Tracy is composed by two parts:
@@ -285,3 +280,8 @@ At this point you can start the profiling:
 1. Double click on one of the game instances showed on the list (or just click to `Connect` button).
 
 Enjoy your profiling!
+
+# Useful links
+* [Tracy documentation](https://github.com/wolfpld/tracy/releases/latest/download/tracy.pdf)
+* [Godot C++ Profilers](https://docs.godotengine.org/en/stable/engine_details/development/debugging/using_cpp_profilers.html)
+* [Godot Custom modules](https://docs.godotengine.org/en/stable/engine_details/architecture/custom_modules_in_cpp.html)
