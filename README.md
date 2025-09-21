@@ -2,7 +2,9 @@
 
 [Tracy Profiler](https://github.com/wolfpld/tracy) is a [Godot Engine](https://github.com/godotengine/godot) module that can be used to profile C++ and scripting at the same time, so to have good insight about what your game is really doing to take the correct actions to heal your game performance.
 
-> This module is a more feature reach and uptodated spin-off of this one [module](https://github.com/Pineapple/GodotTracy).
+> This module is a more feature reach and up to date spin-off of this one [module](https://github.com/Pineapple/GodotTracy).
+> Which is an another spinoff of this one [module](https://github.com/AndreaCatania/godot_tracy)
+> It has included singleton to use profiler in GDScript and in C++.
 
 ![](godot_tracy_sample.gif)
 
@@ -20,7 +22,7 @@ The first step is to include this module into your godot application module dire
 
 You can use the following command:
 ```
-git clone --recurse-submodules https://github.com/AndreaCatania/godot_tracy.git
+git clone --recurse-submodules git@github.com:ndcrd/godot_tracy.git
 ```
 
 > Note: If you don't use the above command make sure to execute the following one, so to fetch the `Tracy` repository.
@@ -28,31 +30,50 @@ git clone --recurse-submodules https://github.com/AndreaCatania/godot_tracy.git
 > git submodule update --init --recursive
 > ```
 
+> Note: If you would like to update Tracy submodule to latest or specific commit.
+> But be aware, Tracy client-server versions might mismatch when built and run. I recommend you updating to stick to latest release versions.
+> ```
+> git submodule update --recursive --remote #for latest commit
+> #or you can:
+> cd tracy
+> git checkout -b <branch> <commit_id> #for ex. git checkout c556831 will update tracy to 0.12 release version
+> ```
+
 ## The profiler GUI
 
 The profiler GUI allows to consult all the data gathered by tracy. If you are on windows you can just downloaded the GUI from the [Tracy GitHub repository](https://github.com/wolfpld/tracy/releases/), otherwise you have to compile it yourself; do not despair it's easy!
-
+>```
+> If some packages are not listed in description, or you have additions to guide, please, let me know, so we can update readme! ;)
+>```
 To compile the tracy profiler GUI all you need to do is to:
-1. Install all the following dependency `clang libglfw3-dev libdbus-1-dev libcapstone-dev libtbb-dev libdebuginfod-dev freetype-devel`.
+
+1. Install all the following dependency
+   - Debian `sudo apt install clang libglfw3-dev libdbus-1-dev libcapstone-dev libtbb-dev libdebuginfod-dev freetype-devel`.
    - Fedora: `sudo dnf install glfw-devel dbus-devel capstone-devel tbb-devel freetype-devel clang`
 1. Using a terminal, go into the `godot_tracy/` folder.
-1. Compile the GUI using the following command:
- 	```
- 	CC=clang CXX=clang++ make release -C ./tracy/profiler/build/unix -j `nproc`
- 	```
+2. Install dependencies:
+	If you are using X11 window system: `cmake -DLEGACY=ON -B profiler/build -S profiler`
+	If you are on wayland: `cmake -B profiler/build -S profiler`
+3. Build binary: `cmake --build profiler/build --config Release --parallel $(nproc)`
 
-If the above command succeeds, the following binary is produced: `Tracy-release` (`godot_tracy/tracy/profiler/build/unix/Tracy-release`).
+If the above command succeeds, the following binary is produced: `tracy-profiler` (`godot_tracy/tracy/profiler/build/`).
+Now you can move binary to your prefered location `ex. /usr/local/bin`
 
 ## The tracy instrumentation
 
 ### How to enable tracy
+First of all, if you haven't cloned engine files yet, go ahead and clone a branch version you currently working in from [Godot Engine Github page](https://github.com/godotengine/godot)
+This is required, Stable release builds do not have debug symbols included in built binary.
 
-You have to explicitly enable it by adding `tracy_enable=true` to your SCons build command. This is an example:
-```
-scons p=x11 target=release_debug tracy_enable=yes CCFLAGS="-fno-omit-frame-pointer -fno-inline -ggdb3"
-```
+Once you've downloaded godot branch, we move `godot_tracy` folder into `/modules folder` inside Godot engine. full path should look like `~/godot/modules/godot_tracy`
+Now we can build our debug version with Tracy profiler in it.
 
-> Note: The command `CCFLAGS="-fno-omit-frame-pointer -fno-inline -ggdb3"` will compile the game with all the needed debug info needed to properly profile the game.
+You have to explicitly enable it by adding `tracy_enable=true` to your SCons build command. Otherwise Tracy wont be initialized in engine when its run. This is an example:
+```
+scons p=<your_platform> debug_symbols=yes production=yes tracy_enable=yes CCFLAGS="-fno-omit-frame-pointer -fno-inline -ggdb3"
+```
+We compile binaries with the `production=yes debug_symbols=yes` to get profiling data that best matches the production environment.
+> Note: The command `CCFLAGS="-fno-omit-frame-pointer -fno-inline -ggdb3"` will compile engine with all the needed debug info needed to properly profile it.
 
 ### Add tracy to godot C++
 
