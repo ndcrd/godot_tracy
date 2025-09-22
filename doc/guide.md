@@ -18,17 +18,17 @@ git clone --recurse-submodules git@github.com:ndcrd/godot_tracy.git
 > ```
 
 > Note: If you would like to update Tracy submodule to latest or specific commit.
-> But be aware, Tracy client-server versions might mismatch when built and run. I recommend you updating to stick to latest release versions.
+> But be aware, Tracy client-server versions might mismatch when built and run. I recommend you to stick to latest release versions when updating submodule.
 > ```
 > git submodule update --recursive --remote #for latest commit
 > #or you can:
 > cd tracy
-> git checkout -b <branch> <commit_id> #for ex. git checkout c556831 will update tracy to 0.12 release version
+> git checkout -b <branch> <commit_id> #for ex. git checkout c556831 will update tracy master branch to 0.12 release version
 > ```
 
 ## The profiler GUI
 
-The profiler GUI allows to consult all the data gathered by tracy. If you are on windows you can just downloaded the GUI from the [Tracy GitHub repository](https://github.com/wolfpld/tracy/releases/), otherwise you have to compile it yourself; do not despair it's easy!
+The profiler GUI allows to consult all the data gathered by tracy. If you are on windows you can just download the GUI from the [Tracy GitHub repository](https://github.com/wolfpld/tracy/releases/), otherwise you have to compile it yourself; do not despair it's easy!
 >```test
 > If some packages are not listed in description, or you have additions to guide, please, let me know, so we can update readme! ;)
 >```
@@ -38,9 +38,9 @@ To compile the tracy profiler GUI all you need to do is to:
    - Debian `sudo apt install clang libglfw3-dev libdbus-1-dev libcapstone-dev libtbb-dev libdebuginfod-dev freetype-devel`.
    - Fedora: `sudo dnf install glfw-devel dbus-devel capstone-devel tbb-devel freetype-devel clang`
 1. Using a terminal, go into the `godot_tracy/` folder.
-2. Install dependencies:
-	If you are using X11 window system: `cmake -DLEGACY=ON -B profiler/build -S profiler`
-	If you are on wayland: `cmake -B profiler/build -S profiler`
+2. Install dependencies
+	- If you are using X11 window system: `cmake -DLEGACY=ON -B profiler/build -S profiler`
+	- If you are on wayland: `cmake -B profiler/build -S profiler`
 3. Build binary: `cmake --build profiler/build --config Release --parallel $(nproc)`
 
 If the above command succeeds, the following binary is produced: `tracy-profiler` (`godot_tracy/tracy/profiler/build/`).
@@ -68,7 +68,7 @@ At this point you are free to use tracy. By default tracy shows all the CPU prof
 
 1. `FrameMark;` Is used to tell tracy the beginning of the frame. Tracy will split the work per each frame so you can review any specific frame.
 1. `ZoneScoped;` Is used to mark a specific function.
-1. `TracyMessage;` Is used to log an event. This is really useful to report some useful information to know the exact application status.[A link to that custom anchor](#my-custom-anchor-point)
+1. `TracyMessage;` Is used to log an event. This is really useful to report some useful information to know the exact application status.
 
 
 > Note 1: Alot more commands are available, for example you can customize the zone name, or add extra information (like the node_path, or the function arguments values, etc..). Please review the tracy documentation.
